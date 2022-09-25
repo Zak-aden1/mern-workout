@@ -14,6 +14,11 @@ const workoutSchema = new Schema({
   sets: {
     type: Number,
     required: true
+  },
+  body: {
+    type: String, 
+    enum: ['legs', 'chest', 'backs', 'arms'],
+    required: true
   }
 }, {timestamps: true});
 
