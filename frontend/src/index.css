@@ -66,3 +66,23 @@ header a {
   border-radius: 50%;
   color: #333;
 }
+
+/* card */
+.card {
+  width: 200px;
+  height: 150px;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  color: white;
+  background-image: url('./assets/legs-day.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 0.33s ease-in-out;
+}
+.card:hover {
+  box-shadow: rgba(149, 157, 165, 0.5) 0px 10px 26px;
+  cursor: pointer;
+  transform: translateY(-20px);
+}
