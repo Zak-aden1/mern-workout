@@ -14,13 +14,11 @@ const Home = () => {
   useEffect(() => {
     axios.get('/api/workouts')
       .then(({data}) => {
-        console.log('data', data);
         dispatch({type: 'SET_WORKOUTS', payload: data})
       })
       .catch(err => console.log(err))
   }, [])
 
-  console.log(workouts);
   const bodyWorkout = workouts?.filter(({ type: workoutType }) => workoutType === type);
   
   return (
