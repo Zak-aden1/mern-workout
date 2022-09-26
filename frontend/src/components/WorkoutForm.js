@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 
+/* Form to create new specific workout */
 const WorkoutForm = ({ type }) => {
   const { dispatch } = useWorkoutsContext();
 

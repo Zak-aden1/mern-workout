@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 
+/* card to show and delete specific workout */
 const WorkoutDetails = ({ workout: {title, reps, sets, createdAt, _id} }) => {
   const { dispatch } = useWorkoutsContext();
 
@@ -13,6 +14,7 @@ const WorkoutDetails = ({ workout: {title, reps, sets, createdAt, _id} }) => {
       })
       .catch(err => console.log('del err', err))
   }
+
   return (
     <div className='workout-details'>
       <h4>{title}</h4>
