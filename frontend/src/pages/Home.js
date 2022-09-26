@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,7 +17,7 @@ const Home = () => {
         dispatch({type: 'SET_WORKOUTS', payload: data})
       })
       .catch(err => console.log(err))
-  }, [])
+  }, [dispatch])
 
   const bodyWorkout = workouts?.filter(({ type: workoutType }) => workoutType === type);
   

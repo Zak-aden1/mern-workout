@@ -17,7 +17,6 @@ const WorkoutForm = ({ type }) => {
     const workout = {type, title, sets, reps}
     axios.post('/api/workouts', workout)
       .then(({data}) => {
-        console.log('new data', data);
         setError(null)
         setTitle('')
         setReps('')
