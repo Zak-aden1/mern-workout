@@ -1,21 +1,25 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 
 const WorkoutForm = ({ type }) => {
   const [title, setTitle] = useState('')
   const [sets, setSets] = useState('')
   const [reps, setReps] = useState('')
   const [error, setError] = useState(null)
+  const {workouts, dispatch} = useWorkoutsContext();
 
   const handleSubmit = (e) => {
     e.preventDefault()
     const workout = {type, title, sets, reps}
     axios.post('/api/workouts', workout)
-      .then(data => {
+      .then(({data}) => {
+        console.log('new data', data);
         setError(null)
         setTitle('')
         setReps('')
         setSets('')
+        dispatch({type: 'CREATE_WORKOUT', payload: data})
       })
       .catch(({response: {data}}) => {
         console.log('err', data); setError(data.error)
