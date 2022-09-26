@@ -67,6 +67,12 @@ header a {
   color: #333;
 }
 
+/* card container */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
 /* card */
 .card {
   width: 200px;
@@ -80,9 +86,50 @@ header a {
   background-repeat: no-repeat;
   background-position: center;
   transition: all 0.33s ease-in-out;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .card:hover {
   box-shadow: rgba(149, 157, 165, 0.5) 0px 10px 26px;
   cursor: pointer;
   transform: translateY(-20px);
+}
+.card > p, .card > h4 {
+  border-radius: 8px;
+  background-color: grey;
+  width: 80%;
+  text-align: center;
+}
+
+/* workout form */
+label, input {
+  display: block;
+}
+input {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+form button {
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+}
+div.error {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  margin: 20px 0;
 }

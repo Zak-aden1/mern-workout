@@ -13,6 +13,7 @@ function App() {
         <div className='pages'>
           <Routes>
             <Route path='/' element={<Details />}/>
+            <Route path='/:type' element={<Home />}/>
           </Routes>
         </div>
       </BrowserRouter>

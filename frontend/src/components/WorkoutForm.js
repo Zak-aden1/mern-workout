@@ -1,18 +1,30 @@
+import axios from 'axios'
 import React, { useState } from 'react'
 
-const WorkoutForm = () => {
+const WorkoutForm = ({ type }) => {
   const [title, setTitle] = useState('')
   const [sets, setSets] = useState('')
   const [reps, setReps] = useState('')
+  const [error, setError] = useState(null)
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('uyo ');
+    const workout = {type, title, sets, reps}
+    axios.post('/api/workouts', workout)
+      .then(data => {
+        setError(null)
+        setTitle('')
+        setReps('')
+        setSets('')
+      })
+      .catch(({response: {data}}) => {
+        console.log('err', data); setError(data.error)
+      })
   }
 
   return (
     <form className='create' onSubmit={handleSubmit}>
-      <h3>Add a new workout for {}</h3>
+      <h3>Add new {type} workout</h3>
 
       <label>Title for excercise</label>
       <input 
@@ -33,8 +45,8 @@ const WorkoutForm = () => {
         type="number"
         value={reps}
       />
-
       <button>Add workout</button>
+      {error && <div className='error'>{error}</div>}
     </form>
   )
 }
