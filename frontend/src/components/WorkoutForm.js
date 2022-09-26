@@ -3,11 +3,12 @@ import React, { useState } from 'react'
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 
 const WorkoutForm = ({ type }) => {
+  const { dispatch } = useWorkoutsContext();
+
   const [title, setTitle] = useState('')
   const [sets, setSets] = useState('')
   const [reps, setReps] = useState('')
   const [error, setError] = useState(null)
-  const {workouts, dispatch} = useWorkoutsContext();
 
   const handleSubmit = (e) => {
     e.preventDefault()
