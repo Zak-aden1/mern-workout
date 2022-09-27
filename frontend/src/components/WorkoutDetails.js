@@ -1,15 +1,19 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useState } from 'react'
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import Modal from './Modal';
 
 /* card to show and delete specific workout */
-const WorkoutDetails = ({ workout: {title, reps, sets, createdAt, _id} }) => {
+const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useWorkoutsContext();
+  const [showModal, setShowModal] = useState(false)
+  const closeModal = () => setShowModal(false)
+  const openModal = () => setShowModal(true)
 
-  const handleClick = () => {
-    axios.delete(`/api/workouts/${_id}`)
+  const handleDelete = () => {
+    axios.delete(`/api/workouts/${workout._id}`)
       .then(({data}) => {
         console.log('deleted', data);
         dispatch({type: 'DELETE_WORKOUT', payload: data })
@@ -18,13 +22,17 @@ const WorkoutDetails = ({ workout: {title, reps, sets, createdAt, _id} }) => {
   }
 
   return (
+    <>
     <div className='workout-details'>
-      <h4>{title}</h4>
-      <p><strong>Sets: </strong>{sets}</p>
-      <p><strong>Reps: </strong>{reps}</p>
-      <p>{formatDistanceToNow(new Date(createdAt), { addSuffix: true })}</p>
-      <span className="material-symbols-outlined"  onClick={handleClick}>delete</span>
+      <h4>{workout.title}</h4>
+      <p><strong>Sets: </strong>{workout.sets}</p>
+      <p><strong>Reps: </strong>{workout.reps}</p>
+      <p>{formatDistanceToNow(new Date(workout.createdAt), { addSuffix: true })}</p>
+      <span className="material-symbols-outlined delete"  onClick={handleDelete}>delete</span>
+      <span className="material-symbols-outlined edit"  onClick={openModal}>edit</span>
     </div>
+    {/* {showModal &&<Modal workout={workout} handleClose={closeModal}/>} */}
+    </>
   )
 }
 
