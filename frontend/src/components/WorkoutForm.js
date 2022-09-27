@@ -1,26 +1,21 @@
-import axios from 'axios'
 import React, { useState } from 'react'
+import { useFormik } from "formik";
+import axios from 'axios'
+
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 
 /* Form to create new specific workout */
 const WorkoutForm = ({ type }) => {
   const { dispatch } = useWorkoutsContext();
 
-  const [title, setTitle] = useState('')
-  const [sets, setSets] = useState('')
-  const [reps, setReps] = useState('')
+
   const [error, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const workout = {type, title, sets, reps}
-    axios.post('/api/workouts', workout)
+  const handleSubmit = (values) => {
+    axios.post('/api/workouts', {...values, type})
       .then(({data}) => {
         setError(null)
-        setTitle('')
-        setReps('')
-        setSets('')
         setEmptyFields([])
         dispatch({type: 'CREATE_WORKOUT', payload: data})
       })
@@ -30,33 +25,48 @@ const WorkoutForm = ({ type }) => {
       })
   }
 
+  const formik = useFormik({
+    initialValues: {
+      title: '',
+      sets: '',
+      reps: ''
+    },
+    onSubmit: handleSubmit,
+  });
+
   return (
-    <form className='create' onSubmit={handleSubmit}>
+    <form className='create' onSubmit={formik.handleSubmit}>
       <h3>Add new {type} workout</h3>
 
       <label>Title for excercise</label>
       <input 
-        onChange={(e) => setTitle(e.target.value)} 
         type="text"
-        value={title}
+        id="title"
+        name="title"
+        value={formik.values.title}
+        onChange={formik.handleChange}
         className={emptyFields.includes('title') ? 'error': ''}
       />
 
       <label>sets</label>
       <input 
-        onChange={(e) => setSets(e.target.value)} 
         type="number"
-        value={sets}
+        id="sets"
+        name="sets"
+        value={formik.values.sets}
+        onChange={formik.handleChange}
         className={emptyFields.includes('sets') ? 'error': ''}
       />
       <label>reps</label>
       <input 
-        onChange={(e) => setReps(e.target.value)} 
         type="number"
-        value={reps}
+        id="reps"
+        name="reps"
+        value={formik.values.reps}
+        onChange={formik.handleChange}
         className={emptyFields.includes('reps') ? 'error': ''}
       />
-      <button>Add workout</button>
+      <button type="submit">Add workout</button>
       {error && <div className='error'>{error}</div>}
     </form>
   )
