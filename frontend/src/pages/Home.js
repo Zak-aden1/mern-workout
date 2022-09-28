@@ -31,7 +31,7 @@ const Home = () => {
         )}
 
       </div>
-      <WorkoutForm type={type} />
+      <WorkoutForm />
     </div>
   )
 }

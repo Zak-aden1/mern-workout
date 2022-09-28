@@ -1,35 +1,52 @@
 import React, { useState } from 'react'
+import { useParams } from 'react-router-dom';
 import { useFormik } from "formik";
 import axios from 'axios'
 
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 
 /* Form to create new specific workout */
-const WorkoutForm = ({ type }) => {
+const WorkoutForm = ({ workout, handleClose = () => {} }) => {
   const { dispatch } = useWorkoutsContext();
+  const { type } = useParams();
 
 
   const [error, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
 
   const handleSubmit = (values) => {
-    axios.post('/api/workouts', {...values, type})
+    if(workout) {
+      axios.patch(`/api/workouts/${workout.id}`, {...values})
+        .then(data => {
+          dispatch({type: 'UPDATE_WORKOUT', payload: values})
+          setError(null)
+          setEmptyFields([])
+          handleClose()
+        })
+        .catch(({response: {data}}) => {
+          setError(data.error)
+          setEmptyFields(data.emptyFields)
+        })
+    } else {
+      axios.post('/api/workouts', {...values, type})
       .then(({data}) => {
         setError(null)
         setEmptyFields([])
         dispatch({type: 'CREATE_WORKOUT', payload: data})
       })
-      .catch(({response: {data}}) => {
-        console.log('err', data); setError(data.error)
+      .catch(({response: { data }}) => {
+        setError(data.error)
         setEmptyFields(data.emptyFields)
       })
+    }
   }
 
   const formik = useFormik({
     initialValues: {
-      title: '',
-      sets: '',
-      reps: ''
+      title:  '',
+      sets:  '',
+      reps:  '',
+      ...workout
     },
     onSubmit: handleSubmit,
   });

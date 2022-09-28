@@ -5,6 +5,7 @@ import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import Modal from './Modal';
 
+
 /* card to show and delete specific workout */
 const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useWorkoutsContext();
@@ -31,7 +32,7 @@ const WorkoutDetails = ({ workout }) => {
       <span className="material-symbols-outlined delete"  onClick={handleDelete}>delete</span>
       <span className="material-symbols-outlined edit"  onClick={openModal}>edit</span>
     </div>
-    {/* {showModal &&<Modal workout={workout} handleClose={closeModal}/>} */}
+    {showModal &&<Modal workout={workout} handleClose={closeModal}/>}
     </>
   )
 }

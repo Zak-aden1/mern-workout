@@ -167,6 +167,18 @@ input.error {
   transform: translate(-50%,-50%);
   padding: 20px;
 }
+.modal-button {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  /* background: var(--primary); */
+  /* border: 0;/ */
+  /* color: #fff; */
+  /* padding: 10px; */
+  /* font-family: "Poppins"; */
+  /* border-radius: 4px; */
+  /* cursor: pointer; */
+}
 
 .display-block {
   display: block;
