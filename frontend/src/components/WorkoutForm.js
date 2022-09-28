@@ -6,7 +6,7 @@ import axios from 'axios'
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 
 /* Form to create new specific workout */
-const WorkoutForm = ({ workout, handleClose = () => {} }) => {
+const WorkoutForm = ({ workout, handleClose }) => {
   const { dispatch } = useWorkoutsContext();
   const { type } = useParams();
 
