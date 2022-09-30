@@ -1,21 +1,23 @@
 import React from 'react'
 import { useFormik } from "formik";
+import { useLogin } from '../hooks/useLogin';
 
 const Login = () => {
+  const { login, error, isLoading } = useLogin()
 
   const formik = useFormik({
     initialValues: {
       email:  '',
       password:  '',
     },
-    onSubmit: (values) => {
-      console.log('values', values);
+    onSubmit: ({email, password}) => {
+      login(email, password)
     },
   });
 
   return (
     <form className='signup' onSubmit={formik.handleSubmit}>
-      <h3>Sign up</h3>
+      <h3>Login</h3>
 
       <label>Email:</label>
       <input 
@@ -32,7 +34,9 @@ const Login = () => {
         onChange={formik.handleChange}
         value={formik.values.password}
       />
-      <button>Login</button>
+      <button disabled={isLoading}>Login</button>
+      {error && <div className='error'>{error.data.error}</div>}
+      {isLoading&& <div className='error'>loading</div>}
     </form>
   )
 }

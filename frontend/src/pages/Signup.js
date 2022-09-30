@@ -9,10 +9,11 @@ const Signup = () => {
     initialValues: {
       email:  '',
       password:  '',
+      username: ''
     },
-    onSubmit: ({email, password}) => {
-      signup(email, password)
-      console.log('check', error);
+    onSubmit: ({email, password, username}) => {
+      signup(email, password, username)
+      console.log('check', username);
     },
   });
 
@@ -28,6 +29,14 @@ const Signup = () => {
         value={formik.values.email}
       />
 
+      <label>Username:</label>
+      <input 
+        name="username"
+        type="username"
+        onChange={formik.handleChange}
+        value={formik.values.username}
+      />
+
       <label>Password:</label>
       <input 
         name="password"
@@ -36,7 +45,7 @@ const Signup = () => {
         value={formik.values.password}
       />
 
-      <button>Login</button>
+      <button disabled={isLoading}>Login</button>
       {error && <div className='error'>{error.data.error}</div>}
       {isLoading&& <div className='error'>loading</div>}
     </form>

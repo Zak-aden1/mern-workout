@@ -8,11 +8,12 @@ export const useSignup = () => {
 
   const { dispatch } = useAuthContext();
 
-   const signup = (email, password) => {
+   const signup = (email, password, username) => {
     setError(null)
     setIsLoading(true)
+    console.log('signup', username);
 
-    axios.post('/api/user/signup', {email, password})
+    axios.post('/api/user/signup', {email, password, username})
       .then(({data}) => {
         dispatch({type: 'LOGIN', payload: data})
         setIsLoading(false)
