@@ -1,15 +1,18 @@
 import React from 'react'
 import { useFormik } from "formik";
+import { useSignup } from '../hooks/useSignup';
 
 const Signup = () => {
+  const { signup, error, isLoading} = useSignup();
 
   const formik = useFormik({
     initialValues: {
       email:  '',
       password:  '',
     },
-    onSubmit: (values) => {
-      console.log('values', values);
+    onSubmit: ({email, password}) => {
+      signup(email, password)
+      console.log('check', error);
     },
   });
 
@@ -34,6 +37,8 @@ const Signup = () => {
       />
 
       <button>Login</button>
+      {error && <div className='error'>{error.data.error}</div>}
+      {isLoading&& <div className='error'>loading</div>}
     </form>
   )
 }
