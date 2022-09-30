@@ -4,6 +4,7 @@ import { useSignup } from '../hooks/useSignup';
 
 const Signup = () => {
   const { signup, error, isLoading} = useSignup();
+  const errorFields = error?.data?.errorFields || []
 
   const formik = useFormik({
     initialValues: {
@@ -14,6 +15,7 @@ const Signup = () => {
     onSubmit: ({email, password, username}) => {
       signup(email, password, username)
       console.log('check', username);
+      console.log('error', error);
     },
   });
 
@@ -27,6 +29,7 @@ const Signup = () => {
         type="email"
         onChange={formik.handleChange}
         value={formik.values.email}
+        className={errorFields.includes('email') ? 'error' : ''}
       />
 
       <label>Username:</label>
@@ -35,6 +38,7 @@ const Signup = () => {
         type="username"
         onChange={formik.handleChange}
         value={formik.values.username}
+        className={errorFields.includes('username') ? 'error' : ''}
       />
 
       <label>Password:</label>
@@ -43,6 +47,7 @@ const Signup = () => {
         type="password"
         onChange={formik.handleChange}
         value={formik.values.password}
+        className={errorFields.includes('password') ? 'error' : ''}
       />
 
       <button disabled={isLoading}>Login</button>
