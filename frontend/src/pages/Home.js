@@ -6,13 +6,15 @@ import WorkoutDetails from '../components/WorkoutDetails';
 import WorkoutForm from '../components/WorkoutForm';
 
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const Home = () => {
   const { type } = useParams();
   const {workouts, dispatch} = useWorkoutsContext();
+  const { user } = useAuthContext();
 
   useEffect(() => {
-    axios.get('/api/workouts')
+    axios.get('/api/workouts', { headers: {'Authorization' : `Bearer ${user?.token}`}})
       .then(({data}) => {
         dispatch({type: 'SET_WORKOUTS', payload: data})
       })

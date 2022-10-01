@@ -4,17 +4,22 @@ import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import Modal from './Modal';
-
+import { useAuthContext } from '../hooks/useAuthContext';
 
 /* card to show and delete specific workout */
 const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useWorkoutsContext();
+  const { user } = useAuthContext();
   const [showModal, setShowModal] = useState(false)
   const closeModal = () => setShowModal(false)
   const openModal = () => setShowModal(true)
 
   const handleDelete = () => {
-    axios.delete(`/api/workouts/${workout._id}`)
+    if(!user) {
+      return alert('You need to be logged in mate')
+    }
+
+    axios.delete(`/api/workouts/${workout._id}`, { headers: {'Authorization' : `Bearer ${user?.token}`}})
       .then(({data}) => {
         console.log('deleted', data);
         dispatch({type: 'DELETE_WORKOUT', payload: data })

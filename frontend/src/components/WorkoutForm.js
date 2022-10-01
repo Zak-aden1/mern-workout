@@ -4,19 +4,26 @@ import { useFormik } from "formik";
 import axios from 'axios'
 
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
+import { useAuthContext } from '../hooks/useAuthContext';
 
 /* Form to create new specific workout */
 const WorkoutForm = ({ workout, handleClose }) => {
   const { dispatch } = useWorkoutsContext();
   const { type } = useParams();
+  const { user } = useAuthContext();
 
 
   const [error, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
 
   const handleSubmit = (values) => {
+    if(!user) {
+      setError("You must be logged in")
+      return
+    }
+
     if(workout) {
-      axios.patch(`/api/workouts/${workout.id}`, {...values})
+      axios.patch(`/api/workouts/${workout.id}`, {...values}, { headers: {'Authorization' : `Bearer ${user?.token}`}})
         .then(data => {
           dispatch({type: 'UPDATE_WORKOUT', payload: values})
           setError(null)
@@ -28,7 +35,7 @@ const WorkoutForm = ({ workout, handleClose }) => {
           setEmptyFields(data.emptyFields)
         })
     } else {
-      axios.post('/api/workouts', {...values, type})
+      axios.post('/api/workouts', {...values, type}, { headers: {'Authorization' : `Bearer ${user?.token}`}})
       .then(({data}) => {
         setError(null)
         setEmptyFields([])
