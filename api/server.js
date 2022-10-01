@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const workoutRouter = require('./routes/workouts');
 const userRoutes = require('./routes/user')
+const path = require('path')
 
 const app = express();
 
