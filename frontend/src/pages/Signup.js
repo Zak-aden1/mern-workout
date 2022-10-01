@@ -14,8 +14,6 @@ const Signup = () => {
     },
     onSubmit: ({email, password, username}) => {
       signup(email, password, username)
-      console.log('check', username);
-      console.log('error', error);
     },
   });
 

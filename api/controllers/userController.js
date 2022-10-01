@@ -28,8 +28,6 @@ const signupUser = async (req, res) => {
   if(!username) errorFields.push('username')
   if(!password) errorFields.push('password')
 
-  // if(errorFields.length > 0) return res.status(400).json({error: 'please'})
-
   try {
     const user = await User.signup(req.body);
 
