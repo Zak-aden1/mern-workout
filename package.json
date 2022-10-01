@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "concurrently": "^7.4.0"
+  },
+  "name": "videolibrary",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "app": "yarn workspace @mern-workout/app start",
+    "server": "yarn workspace @mern-workout/api serve",
+    "build-app": "yarn workspace @mern-workout/app build",
+    "build-server": "yarn workspace @mern-workout/api build",
+    "start": "concurrently --kill-others-on-fail \"yarn app\"  \"yarn server\"",
+    "start:server" : "yarn workspace @mern-workout/api start"
+  },
+  "engines": {
+    "node": "14.15.0"
+  }
+}
