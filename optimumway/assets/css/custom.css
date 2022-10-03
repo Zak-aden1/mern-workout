@@ -1,0 +1,36 @@
+/*
+Custom CSS for TemplateMo 561 Purple Buzz
+
+https://templatemo.com/tm-561-purple-buzz
+
+*/
+
+
+.brand {
+  width: 30px;
+}
+
+.pharma {
+  display: none;
+}
+.doctors {
+  display: none;
+} 
+.tech {
+  display: none;
+}
+.other {
+  display: none;
+}
+
+.dispensers {
+  display: none;
+}
+
+.show {
+  display: initial !important;
+}
+
+.hide {
+  display: none !important;
+}
